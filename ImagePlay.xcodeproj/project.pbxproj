@@ -12,6 +12,7 @@
 		13423B5C1FBF7D5B00BAA362 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13423B5A1FBF7D5B00BAA362 /* Main.storyboard */; };
 		13423B5E1FBF7D5B00BAA362 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13423B5D1FBF7D5B00BAA362 /* Assets.xcassets */; };
 		13423B611FBF7D5B00BAA362 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 13423B5F1FBF7D5B00BAA362 /* LaunchScreen.storyboard */; };
+		13423B6A1FBF7EC700BAA362 /* WinterBlue2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 13423B691FBF7EC700BAA362 /* WinterBlue2.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		13423B5D1FBF7D5B00BAA362 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		13423B601FBF7D5B00BAA362 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		13423B621FBF7D5B00BAA362 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		13423B691FBF7EC700BAA362 /* WinterBlue2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = WinterBlue2.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +56,23 @@
 		13423B551FBF7D5B00BAA362 /* ImagePlay */ = {
 			isa = PBXGroup;
 			children = (
-				13423B561FBF7D5B00BAA362 /* AppDelegate.swift */,
 				13423B581FBF7D5B00BAA362 /* ViewController.swift */,
+				13423B691FBF7EC700BAA362 /* WinterBlue2.jpg */,
 				13423B5A1FBF7D5B00BAA362 /* Main.storyboard */,
 				13423B5D1FBF7D5B00BAA362 /* Assets.xcassets */,
-				13423B5F1FBF7D5B00BAA362 /* LaunchScreen.storyboard */,
 				13423B621FBF7D5B00BAA362 /* Info.plist */,
+				13423B681FBF7D6F00BAA362 /* supportingFiles */,
 			);
 			path = ImagePlay;
+			sourceTree = "<group>";
+		};
+		13423B681FBF7D6F00BAA362 /* supportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				13423B5F1FBF7D5B00BAA362 /* LaunchScreen.storyboard */,
+				13423B561FBF7D5B00BAA362 /* AppDelegate.swift */,
+			);
+			path = supportingFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -124,6 +135,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13423B611FBF7D5B00BAA362 /* LaunchScreen.storyboard in Resources */,
+				13423B6A1FBF7EC700BAA362 /* WinterBlue2.jpg in Resources */,
 				13423B5E1FBF7D5B00BAA362 /* Assets.xcassets in Resources */,
 				13423B5C1FBF7D5B00BAA362 /* Main.storyboard in Resources */,
 			);

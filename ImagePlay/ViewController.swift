@@ -10,14 +10,22 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var imageView: UIImageView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        let image = Image(image: UIImage(named: "WinterBlue2.jpg")!)
+        let i2 = image.transformPixels(transformFunc: halfIntensity)
+        imageView.image = i2.toUIImage()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func halfIntensity(p:RGBAPixel) -> RGBAPixel {
+        var p2 = p
+        p2.red = p2.red/2
+        p2.green = p2.green/2
+        p2.blue = p2.blue/2
+        return p2
     }
 
 

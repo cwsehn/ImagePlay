@@ -20,7 +20,7 @@ class ViewController: UIViewController {
         //imageView.image = i2.toUIImage()
         
         let f1 = MixFilter()
-        let f2 = ScaleIntensityFilter(scale: 0.25)
+        let f2 = ScaleIntensityFilter(scale: 0.9)
         let image2 = f1.apply(input: image)
         let image3 = f2.apply(input: image2)
         imageView.image = image3.toUIImage()

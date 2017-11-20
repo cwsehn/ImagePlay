@@ -46,20 +46,48 @@
             </objects>
             <point key="canvasLocation" x="713" y="133"/>
         </scene>
-        <!--View Controller-->
+        <!--Select Filters-->
         <scene sceneID="Mih-7L-yy0">
             <objects>
-                <viewController id="b1h-kd-fg1" sceneMemberID="viewController">
+                <viewController title="Select Filters" id="b1h-kd-fg1" customClass="SelectedFiltersViewController" customModule="ImagePlay" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ccJ-wE-hjH">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="SDw-X3-Vp9">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FilterCell" id="eI6-7b-7gz">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="eI6-7b-7gz" id="Nxw-a4-c95">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="b1h-kd-fg1" id="MNi-3l-eGR"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="SDw-X3-Vp9" secondAttribute="trailing" id="Ae2-d8-zcB"/>
+                            <constraint firstItem="SDw-X3-Vp9" firstAttribute="top" secondItem="UEO-qV-HTi" secondAttribute="top" id="XhR-A3-qSu"/>
+                            <constraint firstItem="SDw-X3-Vp9" firstAttribute="leading" secondItem="ccJ-wE-hjH" secondAttribute="leading" id="mCm-KK-ypi"/>
+                            <constraint firstItem="SDw-X3-Vp9" firstAttribute="bottom" secondItem="UEO-qV-HTi" secondAttribute="bottom" id="nmc-5p-0wD"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="UEO-qV-HTi"/>
                     </view>
+                    <connections>
+                        <outlet property="filtersTable" destination="SDw-X3-Vp9" id="Hr1-18-Kq4"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cad-gI-wXs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1441" y="133"/>
+            <point key="canvasLocation" x="1440.8" y="132.68365817091455"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="XYc-eu-0p2">

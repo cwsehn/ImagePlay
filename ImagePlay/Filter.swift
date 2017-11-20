@@ -9,5 +9,6 @@
 import Foundation
 
 protocol Filter {
+    var name: String { get }
     func apply( input: Image ) -> Image
 }

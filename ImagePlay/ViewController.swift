@@ -31,5 +31,10 @@ class ViewController: UIViewController {
     }
 
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let selectFiltersViewController = segue.destination as? SelectedFiltersViewController {
+            selectFiltersViewController.filtersModel = selectedFilters
+        }
+    }
 }
 

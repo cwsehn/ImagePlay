@@ -9,6 +9,7 @@
 import Foundation
 
 class ScaleIntensityFilter: Filter {
+    let name = "Scale Intensity"
     let scale: Double
     init(scale: Double) {
         self.scale = scale
@@ -25,6 +26,7 @@ class ScaleIntensityFilter: Filter {
 }
 
 class MixFilter: Filter {
+    let name = "Mix Filter"
     func apply(input: Image) -> Image {
         return input.transformPixels(transformFunc: { (p1: RGBAPixel) -> RGBAPixel in
             var p = p1

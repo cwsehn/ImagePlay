@@ -15,8 +15,10 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        selectedFilters.filters.append( MixFilter() )
-        selectedFilters.filters.append( ScaleIntensityFilter(scale: 0.9) )
+        selectedFilters.filters.append( InvertFilter() )
+        // selectedFilters.filters.append( GreyScaleFilter() )
+        // selectedFilters.filters.append( MixFilter() )
+        // selectedFilters.filters.append( ScaleIntensityFilter(scale: 0.9) )
         imageView.image = filterImage().toUIImage()
     }
 

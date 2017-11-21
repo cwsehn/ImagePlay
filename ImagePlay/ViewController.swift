@@ -12,7 +12,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var imageView: UIImageView!
     var selectedFilters = FiltersModel()
-    
+    var fake: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()

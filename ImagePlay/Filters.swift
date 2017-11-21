@@ -8,6 +8,13 @@
 
 import Foundation
 
+let allFilters: [Filter] = [
+    ScaleIntensityFilter(scale: 0.5),
+    MixFilter(),
+    GreyScaleFilter(),
+    InvertFilter()
+]
+
 class ScaleIntensityFilter: Filter {
     let name = "Scale Intensity"
     let scale: Double

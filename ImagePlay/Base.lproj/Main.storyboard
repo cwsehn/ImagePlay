@@ -31,7 +31,8 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="p4s-Xw-TjC">
+                    <navigationItem key="navigationItem" title="Image" id="p4s-Xw-TjC">
+                        <barButtonItem key="backBarButtonItem" title="Apply" id="gKw-ml-Vyy"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="6hO-4g-dYK">
                             <connections>
                                 <segue destination="b1h-kd-fg1" kind="show" id="Ajw-yp-BDo"/>
@@ -44,7 +45,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="713" y="133"/>
+            <point key="canvasLocation" x="774" y="133"/>
         </scene>
         <!--Select Filters-->
         <scene sceneID="Mih-7L-yy0">

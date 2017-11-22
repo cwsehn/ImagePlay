@@ -10,6 +10,8 @@ import UIKit
 
 class AddFilterViewController: UITableViewController {
 
+    var filtersModel = FiltersModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -29,5 +31,11 @@ class AddFilterViewController: UITableViewController {
         return cell
     }
 
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedItem = allFilters[indexPath.row]
+        filtersModel.filters.append(selectedItem)
+        NotificationCenter.default.post(name: NSNotification.Name("FilterUpdate"), object: nil)
+        self.navigationController?.popViewController(animated: true)
+    }
 
 }

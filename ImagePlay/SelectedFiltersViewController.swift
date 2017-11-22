@@ -18,6 +18,15 @@ class SelectedFiltersViewController: UIViewController, UITableViewDataSource, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         filtersTable.isEditing = true
+        
+        NotificationCenter.default.addObserver(
+            forName: NSNotification.Name("FilterUpdate"),
+            object: nil, queue: OperationQueue.main,
+            using: filterUpdate(notification: ))
+    }
+    
+    func filterUpdate(notification: Notification) {
+        filtersTable.reloadData()
     }
     
     
@@ -55,6 +64,16 @@ class SelectedFiltersViewController: UIViewController, UITableViewDataSource, UI
         filtersModel.filters.insert(item, at: destinationIndexPath.row)
         filtersTable.reloadData()
     }
+    
+    /* Navigation */
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let addFiltersVC = segue.destination as? AddFilterViewController {
+            addFiltersVC.filtersModel = filtersModel
+        }
+    }
+    
+    
 }
 
 

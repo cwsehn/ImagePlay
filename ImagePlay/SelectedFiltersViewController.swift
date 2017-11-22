@@ -26,6 +26,7 @@ class SelectedFiltersViewController: UIViewController, UITableViewDataSource, UI
     }
     
     func filterUpdate(notification: Notification) {
+        NotificationCenter.default.post(name: NSNotification.Name("FiltersChanged"), object: nil)
         filtersTable.reloadData()
     }
     
@@ -54,6 +55,7 @@ class SelectedFiltersViewController: UIViewController, UITableViewDataSource, UI
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == UITableViewCellEditingStyle.delete) {
             filtersModel.filters.remove(at: indexPath.row)
+            NotificationCenter.default.post(name: NSNotification.Name("FiltersChanged"), object: nil)
             filtersTable.reloadData()
         }
     }
@@ -62,6 +64,7 @@ class SelectedFiltersViewController: UIViewController, UITableViewDataSource, UI
         let item = filtersModel.filters[ sourceIndexPath.row ]
         filtersModel.filters.remove(at: sourceIndexPath.row)
         filtersModel.filters.insert(item, at: destinationIndexPath.row)
+        NotificationCenter.default.post(name: NSNotification.Name("FiltersChanged"), object: nil)
         filtersTable.reloadData()
     }
     

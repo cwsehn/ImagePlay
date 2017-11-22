@@ -15,13 +15,28 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        selectedFilters.filters.append( InvertFilter() )
-        // selectedFilters.filters.append( GreyScaleFilter() )
-        // selectedFilters.filters.append( MixFilter() )
-        // selectedFilters.filters.append( ScaleIntensityFilter(scale: 0.9) )
+        NotificationCenter.default.addObserver(
+            forName: NSNotification.Name("FiltersChanged"),
+            object: nil, queue: OperationQueue.main,
+            using: filtersChanged(notification: ))
+        
         imageView.image = filterImage().toUIImage()
     }
 
+    var filtersHaveChanged = false
+    func filtersChanged(notification: Notification) {
+        filtersHaveChanged = true
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if ( filtersHaveChanged) {
+            imageView.image = filterImage().toUIImage()
+            filtersHaveChanged = false
+        }
+        
+    }
+    
     func filterImage() -> Image {
        var image = Image(image: UIImage(named: "WinterBlue2.jpg")!)
         

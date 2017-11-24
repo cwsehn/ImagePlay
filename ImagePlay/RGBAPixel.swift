@@ -38,4 +38,77 @@ public struct RGBAPixel {
         get { return UInt8((UInt32(red)+UInt32(green)+UInt32(blue))/3) }
     }
     
+    public func matchClosestColor(palette: [RGBAPixel]) -> RGBAPixel {
+        var closestMatch: RGBAPixel = palette[0]
+        var bestMatchSoFar: Int = palette[0].pixelDelta(otherPixel: self)
+        for pixel in palette {
+            let delta: Int = pixel.pixelDelta(otherPixel: self)
+            if ( delta < bestMatchSoFar ) {
+                closestMatch = pixel
+                bestMatchSoFar = delta
+            }
+        }
+        return closestMatch
+    }
+    
+    public func pixelDelta (otherPixel: RGBAPixel) -> Int {
+        let deltaRed = abs(Int(self.red) - Int(otherPixel.red))
+        let deltaGreen = abs(Int(self.green) - Int(otherPixel.green))
+        let deltaBlue = abs(Int(self.blue) - Int(otherPixel.blue))
+        
+        return (deltaRed + deltaGreen + deltaBlue)
+    }
 }
+
+
+public struct PixelDelta {
+    init(rDelta: Int, gDelta: Int, bDelta: Int) {
+        self.rDelta = rDelta
+        self.gDelta = gDelta
+        self.bDelta = bDelta
+    }
+    func add( p: RGBAPixel ) -> PixelDelta {
+        return PixelDelta( rDelta: self.rDelta+Int(p.red), gDelta: self.gDelta+Int(p.green), bDelta: self.bDelta+Int(p.blue) )
+    }
+    func asPixel() -> RGBAPixel {
+        return RGBAPixel(
+            r: limitToLegalColorChannelRange( delta: rDelta ),
+            g: limitToLegalColorChannelRange( delta: gDelta ),
+            b: limitToLegalColorChannelRange( delta: bDelta )
+        )
+    }
+    
+    func limitToLegalColorChannelRange( delta: Int ) -> UInt8 {
+        if (delta < 0) {
+            return 0
+        } else if ( delta > 0xFF ) {
+            return 0xFF
+        } else {
+            return UInt8(delta)
+        }
+    }
+    
+    let rDelta: Int
+    let gDelta: Int
+    let bDelta: Int
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

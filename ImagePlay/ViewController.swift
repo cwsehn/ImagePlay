@@ -18,7 +18,8 @@ class ViewController: UIViewController {
         NotificationCenter.default.addObserver(
             forName: NSNotification.Name("FiltersChanged"),
             object: nil, queue: OperationQueue.main,
-            using: filtersChanged(notification: ))
+            using: filtersChanged(notification: )
+        )
         
         imageView.image = filterImage().toUIImage()
     }
@@ -34,11 +35,10 @@ class ViewController: UIViewController {
             imageView.image = filterImage().toUIImage()
             filtersHaveChanged = false
         }
-        
     }
     
     func filterImage() -> Image {
-       var image = Image(image: UIImage(named: "WinterBlue2.jpg")!)
+       var image = Image(image: UIImage(named: "WinterBlue1000.jpg")!)
         
         for filter in selectedFilters.filters {
             image = filter.apply(input: image)

@@ -22,6 +22,7 @@
 		13A8C5191FC4D4A200C30036 /* AddFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13A8C5181FC4D4A200C30036 /* AddFilterViewController.swift */; };
 		13B23DA91FC88BEE00434779 /* WinterBlueThumb.png in Resources */ = {isa = PBXBuildFile; fileRef = 13B23DA81FC88BEE00434779 /* WinterBlueThumb.png */; };
 		13B23DAB1FC88CCD00434779 /* WinterBlue1000.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 13B23DAA1FC88CCD00434779 /* WinterBlue1000.jpg */; };
+		13B23DAD1FC897E800434779 /* PixelDelta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B23DAC1FC897E800434779 /* PixelDelta.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		13A8C5181FC4D4A200C30036 /* AddFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFilterViewController.swift; sourceTree = "<group>"; };
 		13B23DA81FC88BEE00434779 /* WinterBlueThumb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WinterBlueThumb.png; sourceTree = "<group>"; };
 		13B23DAA1FC88CCD00434779 /* WinterBlue1000.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = WinterBlue1000.jpg; sourceTree = "<group>"; };
+		13B23DAC1FC897E800434779 /* PixelDelta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelDelta.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +80,7 @@
 				1344D4531FC340AC00D425D9 /* SelectedFiltersViewController.swift */,
 				13A8C5181FC4D4A200C30036 /* AddFilterViewController.swift */,
 				1330E18D1FC0AAE900C5734D /* RGBAPixel.swift */,
+				13B23DAC1FC897E800434779 /* PixelDelta.swift */,
 				1330E18F1FC0ABBE00C5734D /* Image.swift */,
 				137ABF781FC1FC1F005E8E6C /* Filter.swift */,
 				137ABF7A1FC1FCBE005E8E6C /* Filters.swift */,
@@ -184,6 +187,7 @@
 				1330E1901FC0ABBE00C5734D /* Image.swift in Sources */,
 				137ABF7B1FC1FCBE005E8E6C /* Filters.swift in Sources */,
 				13423B591FBF7D5B00BAA362 /* ViewController.swift in Sources */,
+				13B23DAD1FC897E800434779 /* PixelDelta.swift in Sources */,
 				13423B571FBF7D5B00BAA362 /* AppDelegate.swift in Sources */,
 				1344D4541FC340AC00D425D9 /* SelectedFiltersViewController.swift in Sources */,
 			);

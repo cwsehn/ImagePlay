@@ -13,7 +13,8 @@ let allFilters: [Filter] = [
     MixFilter(),
     GreyScaleFilter(),
     InvertFilter(),
-    Colors8Filter()
+    Colors8Filter(),
+    Dither8Colors()
 ]
 
 class ScaleIntensityFilter: Filter {
@@ -56,10 +57,13 @@ class Colors8Filter: Filter {
 class Dither8Colors: Filter {
     let name = "Dither 8 Colors"
     func apply(input: Image) -> Image {
-        let delta = PixelDelta(rDelta: 0, gDelta: 0, bDelta: 0)
-        return input.transformPixels(transformFunc: { (p1: RGBAPixel) -> RGBAPixel in
-            let newDelta = delta.add(p: p1)
-            return p1.matchClosestColor(palette: palette8)
+        var delta = PixelDelta(rDelta: 0, gDelta: 0, bDelta: 0)
+        return input.transformPixels(transformFunc: { (requestedPixel: RGBAPixel) -> RGBAPixel in
+            delta = delta.add(p: requestedPixel)
+            let newPixel = delta.asPixel().matchClosestColor(palette: palette8)
+            delta = delta.subtract(p: newPixel)
+            
+            return newPixel
         })
     }
 }

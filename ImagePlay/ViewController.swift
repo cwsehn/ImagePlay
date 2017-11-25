@@ -13,6 +13,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     var selectedFilters = FiltersModel()
     
+    @IBOutlet weak var busySpinner: UIActivityIndicatorView!
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(
@@ -21,7 +23,7 @@ class ViewController: UIViewController {
             using: filtersChanged(notification: )
         )
         
-        imageView.image = filterImage().toUIImage()
+        applyFilterAndShow()
     }
 
     var filtersHaveChanged = false
@@ -32,18 +34,25 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if ( filtersHaveChanged) {
-            imageView.image = filterImage().toUIImage()
+            applyFilterAndShow()
             filtersHaveChanged = false
         }
     }
     
-    func filterImage() -> Image {
-       var image = Image(image: UIImage(named: "WinterBlue1000.jpg")!)
+    func applyFilterAndShow() {
+        busySpinner.startAnimating()
         
-        for filter in selectedFilters.filters {
-            image = filter.apply(input: image)
+        DispatchQueue.global(qos: .userInitiated).async {
+            var image = Image(image: UIImage(named: "WinterBlue1000.jpg")!)
+            
+            for filter in self.selectedFilters.filters {
+                image = filter.apply(input: image)
+            }
+            DispatchQueue.main.async {
+                self.busySpinner.stopAnimating()
+                self.imageView.image = image.toUIImage()
+            }
         }
-        return image
     }
 
 

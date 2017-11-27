@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -37,17 +38,25 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Image" id="p4s-Xw-TjC">
+                    <navigationItem key="navigationItem" id="p4s-Xw-TjC">
                         <barButtonItem key="backBarButtonItem" title="Apply" id="gKw-ml-Vyy"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="6hO-4g-dYK">
-                            <connections>
-                                <segue destination="b1h-kd-fg1" kind="show" id="Ajw-yp-BDo"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="compose" id="6hO-4g-dYK">
+                                <connections>
+                                    <segue destination="b1h-kd-fg1" kind="show" id="Ajw-yp-BDo"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Item" id="VaD-OL-2dS">
+                                <connections>
+                                    <action selector="swapImage:" destination="BYZ-38-t0r" id="KR3-z3-OEV"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="busySpinner" destination="2vD-cn-KLl" id="A1I-LT-mSX"/>
                         <outlet property="imageView" destination="Uye-BH-7B3" id="QXh-sb-eSq"/>
+                        <outlet property="swapImageButton" destination="VaD-OL-2dS" id="YdI-BC-J31"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

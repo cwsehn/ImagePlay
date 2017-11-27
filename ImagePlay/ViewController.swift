@@ -12,6 +12,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var swapImageButton: UIBarButtonItem!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var transitionImageView: UIImageView!
     var selectedFilters = FiltersModel()
     var isFilteredShowing = false
     
@@ -27,10 +28,14 @@ class ViewController: UIViewController {
         showOriginalImage()
     }
     
+    func updateImage(image: UIImage) {
+        self.imageView.image = image
+    }
+    
     func showOriginalImage() {
-        self.imageView.image = UIImage(named: "WinterBlue1000.jpg")
+        updateImage(image: UIImage(named: "WinterBlue1000.jpg")! )
         swapImageButton.title = ">Filtered"
-        navigationController?.navigationItem.title = "Original"
+        navigationItem.title = "Original"
         isFilteredShowing = false
     }
 
@@ -58,9 +63,9 @@ class ViewController: UIViewController {
             }
             DispatchQueue.main.async {
                 self.busySpinner.stopAnimating()
-                self.imageView.image = image.toUIImage()
+                self.updateImage(image: image.toUIImage())
                 self.swapImageButton.title = ">Original"
-                self.navigationController?.navigationItem.title = "Filtered"
+                self.navigationItem.title = "Filtered"
                 self.isFilteredShowing = true
             }
         }

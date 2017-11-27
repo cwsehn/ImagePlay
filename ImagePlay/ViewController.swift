@@ -29,7 +29,18 @@ class ViewController: UIViewController {
     }
     
     func updateImage(image: UIImage) {
-        self.imageView.image = image
+        self.transitionImageView.alpha = 0
+        self.transitionImageView.image = image
+        UIView.animate(
+            withDuration: 0.7,
+            animations: {
+                self.transitionImageView.alpha = 1
+            },
+            completion: { (finished) in
+                self.imageView.image = image
+                self.transitionImageView.alpha = 0
+            }
+        )
     }
     
     func showOriginalImage() {

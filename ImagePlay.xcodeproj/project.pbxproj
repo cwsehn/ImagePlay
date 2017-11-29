@@ -23,6 +23,7 @@
 		13B23DA91FC88BEE00434779 /* WinterBlueThumb.png in Resources */ = {isa = PBXBuildFile; fileRef = 13B23DA81FC88BEE00434779 /* WinterBlueThumb.png */; };
 		13B23DAB1FC88CCD00434779 /* WinterBlue1000.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 13B23DAA1FC88CCD00434779 /* WinterBlue1000.jpg */; };
 		13B23DAD1FC897E800434779 /* PixelDelta.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13B23DAC1FC897E800434779 /* PixelDelta.swift */; };
+		13C92EFF1FCF2CFB00F10FB1 /* ImageResizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C92EFE1FCF2CFB00F10FB1 /* ImageResizer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		13B23DA81FC88BEE00434779 /* WinterBlueThumb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WinterBlueThumb.png; sourceTree = "<group>"; };
 		13B23DAA1FC88CCD00434779 /* WinterBlue1000.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = WinterBlue1000.jpg; sourceTree = "<group>"; };
 		13B23DAC1FC897E800434779 /* PixelDelta.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelDelta.swift; sourceTree = "<group>"; };
+		13C92EFE1FCF2CFB00F10FB1 /* ImageResizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResizer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 				137ABF781FC1FC1F005E8E6C /* Filter.swift */,
 				137ABF7A1FC1FCBE005E8E6C /* Filters.swift */,
 				1344D4511FC33B3E00D425D9 /* FiltersModel.swift */,
+				13C92EFE1FCF2CFB00F10FB1 /* ImageResizer.swift */,
 				13423B691FBF7EC700BAA362 /* WinterBlue2.jpg */,
 				13B23DA81FC88BEE00434779 /* WinterBlueThumb.png */,
 				13B23DAA1FC88CCD00434779 /* WinterBlue1000.jpg */,
@@ -189,6 +192,7 @@
 				13423B591FBF7D5B00BAA362 /* ViewController.swift in Sources */,
 				13B23DAD1FC897E800434779 /* PixelDelta.swift in Sources */,
 				13423B571FBF7D5B00BAA362 /* AppDelegate.swift in Sources */,
+				13C92EFF1FCF2CFB00F10FB1 /* ImageResizer.swift in Sources */,
 				1344D4541FC340AC00D425D9 /* SelectedFiltersViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

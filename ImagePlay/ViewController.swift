@@ -8,14 +8,15 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var swapImageButton: UIBarButtonItem!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var transitionImageView: UIImageView!
+    var originalImage = UIImage(named: "WinterBlue1000.jpg")!
     var selectedFilters = FiltersModel()
     var isFilteredShowing = false
-    
+    let imageShrinker = ImageResizer(maxDimension: 1024)
     @IBOutlet weak var busySpinner: UIActivityIndicatorView!
    
     override func viewDidLoad() {
@@ -29,8 +30,8 @@ class ViewController: UIViewController {
     }
     
     func updateImage(image: UIImage) {
-        self.transitionImageView.alpha = 0
-        self.transitionImageView.image = image
+        transitionImageView.alpha = 0
+        transitionImageView.image = image
         UIView.animate(
             withDuration: 0.7,
             animations: {
@@ -44,7 +45,7 @@ class ViewController: UIViewController {
     }
     
     func showOriginalImage() {
-        updateImage(image: UIImage(named: "WinterBlue1000.jpg")! )
+        updateImage(image: originalImage )
         swapImageButton.title = ">Filtered"
         navigationItem.title = "Original"
         isFilteredShowing = false
@@ -54,6 +55,37 @@ class ViewController: UIViewController {
     func filtersChanged(notification: Notification) {
         filtersHaveChanged = true
     }
+    
+   
+    @IBAction func onCameraClick(_ sender: UIBarButtonItem) {
+        let ac = UIAlertController(title: "Choose Image", message: nil, preferredStyle: .actionSheet)
+        ac.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action) in
+            self.showPicker(sourceType: .camera )
+        }))
+        ac.addAction(UIAlertAction(title: "Photo Album", style: .default, handler: { (action) in
+            self.showPicker(sourceType: .photoLibrary )
+        }))
+        ac.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        self.present(ac, animated: true, completion: nil)
+    }
+    
+    func showPicker(sourceType: UIImagePickerControllerSourceType) {
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.sourceType = sourceType
+        self.present(picker, animated: true, completion: nil)
+    }
+    
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let picPick = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            originalImage = imageShrinker.resizeImage(original: picPick)
+            showOriginalImage()
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -67,7 +99,7 @@ class ViewController: UIViewController {
         busySpinner.startAnimating()
         
         DispatchQueue.global(qos: .userInitiated).async {
-            var image = Image(image: UIImage(named: "WinterBlue1000.jpg")!)
+            var image = Image(image: self.originalImage)
             
             for filter in self.selectedFilters.filters {
                 image = filter.apply(input: image)

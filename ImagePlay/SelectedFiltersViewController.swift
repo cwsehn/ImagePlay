@@ -9,9 +9,9 @@
 import UIKit
 
 class SelectedFiltersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
-
+   
     @IBOutlet weak var filtersTable: UITableView!
+    @IBOutlet weak var noFilterView: UIView!
     
     var filtersModel = FiltersModel()
     
@@ -22,14 +22,24 @@ class SelectedFiltersViewController: UIViewController, UITableViewDataSource, UI
         NotificationCenter.default.addObserver(
             forName: NSNotification.Name("FilterUpdate"),
             object: nil, queue: OperationQueue.main,
-            using: filterUpdate(notification: ))
+            using: filterUpdate(notification: )
+        )
+        handleFiltersChanged()
     }
     
     func filterUpdate(notification: Notification) {
-        NotificationCenter.default.post(name: NSNotification.Name("FiltersChanged"), object: nil)
-        filtersTable.reloadData()
+        handleFiltersChanged()
     }
     
+    func handleFiltersChanged() {
+        NotificationCenter.default.post(name: NSNotification.Name("FiltersChanged"), object: nil)
+        filtersTable.reloadData()
+        if (filtersModel.filters.count == 0) {
+            filtersTable.backgroundView = noFilterView
+        } else {
+            filtersTable.backgroundView = nil
+        }
+    }
     
     /* Data Source Methods */
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -55,8 +65,7 @@ class SelectedFiltersViewController: UIViewController, UITableViewDataSource, UI
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == UITableViewCellEditingStyle.delete) {
             filtersModel.filters.remove(at: indexPath.row)
-            NotificationCenter.default.post(name: NSNotification.Name("FiltersChanged"), object: nil)
-            filtersTable.reloadData()
+            handleFiltersChanged()
         }
     }
     
@@ -64,8 +73,7 @@ class SelectedFiltersViewController: UIViewController, UITableViewDataSource, UI
         let item = filtersModel.filters[ sourceIndexPath.row ]
         filtersModel.filters.remove(at: sourceIndexPath.row)
         filtersModel.filters.insert(item, at: destinationIndexPath.row)
-        NotificationCenter.default.post(name: NSNotification.Name("FiltersChanged"), object: nil)
-        filtersTable.reloadData()
+        handleFiltersChanged()
     }
     
     /* Navigation */

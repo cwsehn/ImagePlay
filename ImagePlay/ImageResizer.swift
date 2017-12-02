@@ -15,7 +15,7 @@ class ImageResizer {
         self.maxDimension = maxDimension
     }
     
-    func isSmallEnough(w: Int, h: Int) -> Bool {
+    private func isSmallEnough(w: Int, h: Int) -> Bool {
         return (w < maxDimension && h < maxDimension)
     }
     
@@ -49,6 +49,7 @@ private func scaleToNewSize( image: UIImage, w: Int, h: Int ) -> UIImage {
             space: colorSpace ?? CGColorSpaceCreateDeviceRGB(),
             bitmapInfo: bitMapInfo.rawValue
         )
+        
         imageContext?.interpolationQuality = .high
         imageContext?.draw(cgImage, in: CGRect(origin: .zero, size: CGSize(width: CGFloat(w), height: CGFloat(h) )))
         
@@ -58,6 +59,7 @@ private func scaleToNewSize( image: UIImage, w: Int, h: Int ) -> UIImage {
     }
     return image
 }
+
 
 
 

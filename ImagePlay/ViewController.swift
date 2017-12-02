@@ -13,17 +13,19 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var swapImageButton: UIBarButtonItem!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var transitionImageView: UIImageView!
+    @IBOutlet weak var busySpinner: UIActivityIndicatorView!
+   
     var originalImage = UIImage(named: "WinterBlue1000.jpg")!
     var selectedFilters = FiltersModel()
     var isFilteredShowing = false
     let imageShrinker = ImageResizer(maxDimension: 1024)
-    @IBOutlet weak var busySpinner: UIActivityIndicatorView!
    
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(
             forName: NSNotification.Name("FiltersChanged"),
-            object: nil, queue: OperationQueue.main,
+            object: nil,
+            queue: OperationQueue.main,
             using: filtersChanged(notification: )
         )        
         showOriginalImage()

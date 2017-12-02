@@ -9,7 +9,7 @@
 import Foundation
 
 let allFilters: [Filter] = [
-    ScaleIntensityFilter(scale: 0.5),
+    ScaleIntensityFilter(scale: 0.8),
     MixFilter(),
     GreyScaleFilter(),
     InvertFilter(),

@@ -8,8 +8,10 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIScrollViewDelegate {
 
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var swapImageButton: UIBarButtonItem!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var transitionImageView: UIImageView!
@@ -31,6 +33,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         showOriginalImage()
     }
     
+    // ScrollViewDelegate method
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return containerView
+    }
+    
     func updateImage(image: UIImage) {
         transitionImageView.alpha = 0
         transitionImageView.image = image
@@ -48,7 +55,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func showOriginalImage() {
         updateImage(image: originalImage )
-        swapImageButton.title = ">Filtered"
+        swapImageButton.title = (selectedFilters.filters.count > 0) ? ">Filtered" : ""
         navigationItem.title = "Original"
         isFilteredShowing = false
     }
@@ -68,6 +75,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             self.showPicker(sourceType: .photoLibrary )
         }))
         ac.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        
         self.present(ac, animated: true, completion: nil)
     }
     
@@ -78,7 +86,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         self.present(picker, animated: true, completion: nil)
     }
     
-    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let picPick = info[UIImagePickerControllerOriginalImage] as? UIImage {
             originalImage = imageShrinker.resizeImage(original: picPick)
@@ -86,8 +93,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         }
         dismiss(animated: true, completion: nil)
     }
-    
-    
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)

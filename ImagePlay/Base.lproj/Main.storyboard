@@ -74,11 +74,18 @@
                     </view>
                     <navigationItem key="navigationItem" id="p4s-Xw-TjC">
                         <barButtonItem key="backBarButtonItem" title="Apply" id="gKw-ml-Vyy"/>
-                        <barButtonItem key="leftBarButtonItem" systemItem="camera" id="d1z-Hr-3Xu">
-                            <connections>
-                                <action selector="onCameraClick:" destination="BYZ-38-t0r" id="1z7-wx-fH2"/>
-                            </connections>
-                        </barButtonItem>
+                        <leftBarButtonItems>
+                            <barButtonItem systemItem="camera" id="d1z-Hr-3Xu">
+                                <connections>
+                                    <action selector="onCameraClick:" destination="BYZ-38-t0r" id="1z7-wx-fH2"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="action" id="LE9-Lq-8nw">
+                                <connections>
+                                    <action selector="onShare:" destination="BYZ-38-t0r" id="7hS-rN-tdb"/>
+                                </connections>
+                            </barButtonItem>
+                        </leftBarButtonItems>
                         <rightBarButtonItems>
                             <barButtonItem systemItem="compose" id="6hO-4g-dYK">
                                 <connections>
@@ -207,7 +214,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vXL-BV-8cB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2050" y="133"/>
+            <point key="canvasLocation" x="2186" y="133"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="XYc-eu-0p2">

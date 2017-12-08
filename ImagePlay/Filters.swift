@@ -17,6 +17,8 @@ let allFilters: [Filter] = [
     Dither8Colors()
 ]
 
+var currentFilters: [Filter] = []
+
 class ScaleIntensityFilter: Filter {
     let name = "Scale Intensity"
     let scale: Double

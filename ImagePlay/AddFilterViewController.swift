@@ -10,7 +10,7 @@ import UIKit
 
 class AddFilterViewController: UITableViewController {
 
-    var filtersModel = FiltersModel()
+    // var filtersModel = FiltersModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,9 +33,44 @@ class AddFilterViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedItem = allFilters[indexPath.row]
-        filtersModel.filters.append(selectedItem)
+        currentFilters.append(selectedItem)
         NotificationCenter.default.post(name: NSNotification.Name("FilterUpdate"), object: nil)
         self.navigationController?.popViewController(animated: true)
     }
-
 }
+
+
+/*
+ override func prepare(for segue: UIStoryboardSegue, sender: Any?){
+ if let id = segue.identifier {
+ switch id {
+ case "FilterSelected":
+ if let cell = sender as? UITableViewCell,
+ let indexPath = tableView.indexPath(for: cell),
+ let seguedToMVC = segue.destination as? SelectedFiltersViewController
+ {
+ let selectedItem = allFilters[indexPath.row]
+ seguedToMVC.filtersModel.filters.append(selectedItem)
+ NotificationCenter.default.post(name: NSNotification.Name("FilterUpdate"), object: nil)
+ }
+ default: break
+ }
+ }
+ }
+ */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

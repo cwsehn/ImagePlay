@@ -18,9 +18,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var busySpinner: UIActivityIndicatorView!
    
     var originalImage = UIImage(named: "WinterBlue1000.jpg")!
-    var selectedFilters = FiltersModel()
+    //var selectedFilters = currentFilters
     var isFilteredShowing = false
     let imageShrinker = ImageResizer(maxDimension: 1024)
+    
+    let picker = UIImagePickerController()
+    
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +32,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             object: nil,
             queue: OperationQueue.main,
             using: filtersChanged(notification: )
-        )        
+        )
         showOriginalImage()
     }
     
@@ -55,7 +58,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func showOriginalImage() {
         updateImage(image: originalImage )
-        swapImageButton.title = (selectedFilters.filters.count > 0) ? ">Filtered" : ""
+        swapImageButton.title = (currentFilters.count > 0) ? ">Filtered" : ""
         navigationItem.title = "Original"
         isFilteredShowing = false
     }
@@ -67,12 +70,19 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
    
     @IBAction func onCameraClick(_ sender: UIBarButtonItem) {
+        
+        
+        
         let ac = UIAlertController(title: "Choose Image", message: nil, preferredStyle: .actionSheet)
         ac.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action) in
+            if UIImagePickerController.isSourceTypeAvailable(.camera) {
             self.showPicker(sourceType: .camera )
+            }
         }))
         ac.addAction(UIAlertAction(title: "Photo Album", style: .default, handler: { (action) in
+            if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
             self.showPicker(sourceType: .photoLibrary )
+            }
         }))
         ac.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
         
@@ -80,27 +90,52 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     func showPicker(sourceType: UIImagePickerControllerSourceType) {
-        let picker = UIImagePickerController()
         picker.delegate = self
         picker.sourceType = sourceType
         self.present(picker, animated: true, completion: nil)
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let picPick = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            originalImage = imageShrinker.resizeImage(original: picPick)
-            showOriginalImage()
+        if let picPick = info[UIImagePickerControllerImageURL] as? URL {
+            //picker.popViewController(animated: false)
+            imagePickerControllerDidCancel(picker)
+            fetchImage(url: picPick)            
         }
-        dismiss(animated: true, completion: nil)
+        /*================================================*/
+        //info[keys] for UIImagePicker info Dictionary
+        //     UIImagePickerControllerImageURL
+        //     UIImagePickerControllerOriginalImage
+        /*================================================*/
+    }
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        // print("current Filters are...\(currentFilters)")
         if ( filtersHaveChanged) {
             applyFilterAndShow()
             filtersHaveChanged = false
         }
     }
+    
+    private func fetchImage (url: URL) {
+        //spinner.startAnimating()
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            let urlContents = try? Data(contentsOf: url)
+            if let imageData = urlContents {
+                if let selectedImage = UIImage(data: imageData) {
+                    let shrunkenPic = self?.imageShrinker.resizeImage(original: selectedImage)
+                    self?.originalImage = shrunkenPic ?? UIImage(named: "WinterBlue1000.jpg")!
+                }
+                DispatchQueue.main.async {
+                    self?.showOriginalImage()
+                }
+            }
+        }
+    }
+    
     
     func applyFilterAndShow() {
         busySpinner.startAnimating()
@@ -108,7 +143,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         DispatchQueue.global(qos: .userInitiated).async {
             var image = Image(image: self.originalImage)
             
-            for filter in self.selectedFilters.filters {
+            for filter in currentFilters {
                 image = filter.apply(input: image)
             }
             DispatchQueue.main.async {
@@ -129,10 +164,19 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         }
     }
     
+    @IBAction func onShare(_ sender: UIBarButtonItem) {
+        let vc = UIActivityViewController(activityItems: [self.imageView.image!], applicationActivities: nil)
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    
+    
+    /*
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let selectFiltersViewController = segue.destination as? SelectedFiltersViewController {
             selectFiltersViewController.filtersModel = selectedFilters
         }
     }
+    */
 }
 

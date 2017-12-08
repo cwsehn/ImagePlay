@@ -10,12 +10,21 @@ import UIKit
 
 public class Image {
     
-    //class pictureMemory {
-    
+    private class ImageBuffer {
         let rawdata: UnsafeMutablePointer<RGBAPixel>
-    
-    
-    
+        let capacity: Int
+        init (capacity: Int) {
+            self.capacity = capacity
+            self.rawdata = UnsafeMutablePointer<RGBAPixel>.allocate(capacity: capacity)
+            
+            // let ptr = rawdata[0]
+            // rawdata.initialize(to: ptr, count: capacity) // this is still in question...
+        }        
+        deinit {
+            rawdata.deallocate(capacity: capacity)
+        }
+    }
+    private let imageBuffer: ImageBuffer
     let pixels: UnsafeMutableBufferPointer<RGBAPixel>
     let height: Int
     let width: Int
@@ -28,14 +37,12 @@ public class Image {
     public init( image: UIImage) {
         height = Int(image.size.height)
         width = Int(image.size.width)
-        let pixelCount = height * width
-        rawdata = UnsafeMutablePointer<RGBAPixel>.allocate(capacity: pixelCount)
-        let ptr = rawdata[0]
-        rawdata.initialize(to: ptr, count: pixelCount) // this is still in question...
+        let capacity = height * width
+        imageBuffer = ImageBuffer(capacity: capacity)
         bytesPerRow = 4 * width
         
         let imageContext = CGContext.init(
-            data: rawdata,
+            data: imageBuffer.rawdata,
             width: width,
             height: height,
             bitsPerComponent: bitsPerComponent,
@@ -45,21 +52,18 @@ public class Image {
         
         imageContext!.draw(image.cgImage!, in: CGRect(origin: .zero, size: image.size))
         
-        pixels = UnsafeMutableBufferPointer<RGBAPixel>(start: rawdata, count: width * height)
+        pixels = UnsafeMutableBufferPointer<RGBAPixel>(start: imageBuffer.rawdata, count: capacity)
     }
     
     public init(width: Int, height: Int) {
         self.height = height
         self.width = width
-        let pixelCount = height * width
-        rawdata = UnsafeMutablePointer<RGBAPixel>.allocate(capacity: pixelCount)
-        let ptr = rawdata.pointee
-        rawdata.initialize(to: ptr, count: pixelCount)
+        let capacity = height * width
+        imageBuffer = ImageBuffer(capacity: capacity)
         bytesPerRow = 4 * width
-        pixels = UnsafeMutableBufferPointer<RGBAPixel>(start: rawdata, count: pixelCount)
+        pixels = UnsafeMutableBufferPointer<RGBAPixel>(start: imageBuffer.rawdata, count: capacity)
     }
     
-    // rawdata.deallocate(capacity: width*height)
     
     public func getPixel( x:Int, y: Int ) -> RGBAPixel {
         return pixels[x+y*width]
@@ -68,12 +72,12 @@ public class Image {
     public func setPixel( value: RGBAPixel, x: Int, y: Int ) {
         pixels[x+y*width] = value
     }
-    
-    //  should this be seperate class with its own rawdata....???
-    
+        
     public func toUIImage() -> UIImage {
+        //let capacity = height*width
+        //let outBuffer = ImageBuffer(capacity: capacity)
         let outContext = CGContext.init(
-            data: rawdata,
+            data: imageBuffer.rawdata,
             width: width,
             height: height,
             bitsPerComponent: bitsPerComponent,

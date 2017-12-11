@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Photos
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIScrollViewDelegate {
 
@@ -16,7 +17,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var transitionImageView: UIImageView!
     @IBOutlet weak var busySpinner: UIActivityIndicatorView!
-   
+    @IBOutlet weak var imagePickerButton: UIBarButtonItem!
+    
+    
     var originalImage = UIImage(named: "WinterBlue1000.jpg")!
     //var selectedFilters = currentFilters
     var isFilteredShowing = false
@@ -27,14 +30,18 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
    
     override func viewDidLoad() {
         super.viewDidLoad()
+        picker.delegate = self
+        scrollView.delegate = self
         NotificationCenter.default.addObserver(
             forName: NSNotification.Name("FiltersChanged"),
             object: nil,
             queue: OperationQueue.main,
             using: filtersChanged(notification: )
         )
+        checkPermission()
         showOriginalImage()
     }
+    
     
     // ScrollViewDelegate method
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
@@ -71,49 +78,75 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
    
     @IBAction func onCameraClick(_ sender: UIBarButtonItem) {
         
-        
-        
         let ac = UIAlertController(title: "Choose Image", message: nil, preferredStyle: .actionSheet)
-        ac.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action) in
+        ac.addAction(UIAlertAction(title: "Camera", style: .default, handler: { [unowned self] (action) in
             if UIImagePickerController.isSourceTypeAvailable(.camera) {
             self.showPicker(sourceType: .camera )
             }
         }))
-        ac.addAction(UIAlertAction(title: "Photo Album", style: .default, handler: { (action) in
+        ac.addAction(UIAlertAction(title: "Photo Album", style: .default, handler: { [unowned self] (action) in
             if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
             self.showPicker(sourceType: .photoLibrary )
             }
         }))
         ac.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-        
+        ac.modalPresentationStyle = .popover
         self.present(ac, animated: true, completion: nil)
+        ac.popoverPresentationController?.barButtonItem = sender
     }
     
     func showPicker(sourceType: UIImagePickerControllerSourceType) {
-        picker.delegate = self
-        picker.sourceType = sourceType
-        self.present(picker, animated: true, completion: nil)
+        self.picker.allowsEditing = false
+        self.picker.sourceType = sourceType
+        if sourceType == .camera {
+            if UIImagePickerController.availableCaptureModes(for: .rear) != nil {
+                picker.cameraCaptureMode = .photo
+                picker.modalPresentationStyle = .fullScreen
+                //let photoURL =
+                present(self.picker, animated: true, completion: nil)
+                picker.takePicture()
+                
+                
+            }
+        } else {
+            self.picker.modalPresentationStyle = .popover
+            present(self.picker, animated: true, completion: nil)
+            self.picker.popoverPresentationController?.barButtonItem = self.imagePickerButton
+        }
     }
     
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let picPick = info[UIImagePickerControllerImageURL] as? URL {
-            //picker.popViewController(animated: false)
-            imagePickerControllerDidCancel(picker)
-            fetchImage(url: picPick)            
+        
+        if let picPick = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            originalImage = imageShrinker.resizeImage(original: picPick)
+            showOriginalImage()
+        } else {
+            if let picPick = info[UIImagePickerControllerImageURL] as? URL {
+                fetchImage(url: picPick)
+            }
         }
+        
+        dismiss(animated: true, completion: nil)
         /*================================================*/
         //info[keys] for UIImagePicker info Dictionary
         //     UIImagePickerControllerImageURL
         //     UIImagePickerControllerOriginalImage
+        //     UIImagePickerControllerEditedImage
         /*================================================*/
     }
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.dismiss(animated: true, completion: nil)
     }
     
+   
+    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+        print("did show")
+    }
+ 
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        // print("current Filters are...\(currentFilters)")
         if ( filtersHaveChanged) {
             applyFilterAndShow()
             filtersHaveChanged = false
@@ -121,7 +154,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     private func fetchImage (url: URL) {
-        //spinner.startAnimating()
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             let urlContents = try? Data(contentsOf: url)
             if let imageData = urlContents {
@@ -178,5 +210,30 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         }
     }
     */
+    
+    
+    func checkPermission() {
+        let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
+        switch photoAuthorizationStatus {
+        case .authorized:
+            print("Access is granted by user")
+        case .notDetermined:
+            PHPhotoLibrary.requestAuthorization({
+                (newStatus) in
+                print("status is \(newStatus)")
+                if newStatus ==  PHAuthorizationStatus.authorized {
+                    /* do stuff here */
+                    print("success")
+                }
+            })
+            print("It is not determined until now")
+        case .restricted:
+            // same same
+            print("User do not have access to photo album.")
+        case .denied:
+            // same same
+            print("User has denied the permission.")
+        }
+    }
 }
 

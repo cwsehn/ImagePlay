@@ -16,10 +16,9 @@ public class Image {
         init (capacity: Int) {
             self.capacity = capacity
             self.rawdata = UnsafeMutablePointer<RGBAPixel>.allocate(capacity: capacity)
-            
             // let ptr = rawdata[0]
             // rawdata.initialize(to: ptr, count: capacity) // this is still in question...
-        }        
+        }
         deinit {
             rawdata.deallocate(capacity: capacity)
         }

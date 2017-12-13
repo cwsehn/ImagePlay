@@ -198,7 +198,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     @IBAction func onShare(_ sender: UIBarButtonItem) {
         let vc = UIActivityViewController(activityItems: [self.imageView.image!], applicationActivities: nil)
+        vc.modalPresentationStyle = .popover
         self.present(vc, animated: true, completion: nil)
+        vc.popoverPresentationController?.barButtonItem = sender
     }
     
     

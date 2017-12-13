@@ -12,3 +12,7 @@ protocol Filter {
     var name: String { get }
     func apply( input: Image ) -> Image
 }
+
+protocol LinearAdjustableFilter: Filter {
+    
+}

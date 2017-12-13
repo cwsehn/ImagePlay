@@ -19,7 +19,7 @@ let allFilters: [Filter] = [
 
 var currentFilters: [Filter] = []
 
-class ScaleIntensityFilter: Filter {
+class ScaleIntensityFilter: Filter, LinearAdjustableFilter {
     let name = "Scale Intensity"
     let scale: Double
     init(scale: Double) {

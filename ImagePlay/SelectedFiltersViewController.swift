@@ -13,6 +13,12 @@ class SelectedFiltersViewController: UIViewController, UITableViewDataSource, UI
     @IBOutlet weak var filtersTable: UITableView!
     @IBOutlet weak var noFilterView: UIView!
     
+    @IBAction func onEdit(_ sender: UIButton) {
+        let filter = currentFilters[sender.tag]
+        let viewController = storyboard?.instantiateViewController(withIdentifier: "LinearAdjustableViewController") as! LinearAdjustmentViewController
+        viewController.filter = filter as? LinearAdjustableFilter
+        navigationController?.pushViewController(viewController, animated: true)
+    }
     //var currentFilters = FiltersModel()
     
     override func viewDidLoad() {
@@ -47,10 +53,14 @@ class SelectedFiltersViewController: UIViewController, UITableViewDataSource, UI
         return currentFilters.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "FilterCell", for: indexPath)
-        cell.textLabel?.text = currentFilters[indexPath.row].name
-        cell.showsReorderControl = true
-        return cell
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "FilterCell", for: indexPath) as? CustomFilterCell {
+            let filter = currentFilters[indexPath.row]
+            cell.updateFor(filter: filter, tag: indexPath.row)
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "FilterCell", for: indexPath)
+            return cell
+        }        
     }
     
     /* Delegate Methods */
@@ -75,6 +85,10 @@ class SelectedFiltersViewController: UIViewController, UITableViewDataSource, UI
         currentFilters.remove(at: sourceIndexPath.row)
         currentFilters.insert(item, at: destinationIndexPath.row)
         handleFiltersChanged()
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 44
     }
     
     /* Navigation */

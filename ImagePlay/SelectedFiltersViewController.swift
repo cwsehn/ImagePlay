@@ -15,11 +15,13 @@ class SelectedFiltersViewController: UIViewController, UITableViewDataSource, UI
     
     @IBAction func onEdit(_ sender: UIButton) {
         let filter = currentFilters[sender.tag]
-        let viewController = storyboard?.instantiateViewController(withIdentifier: "LinearAdjustableViewController") as! LinearAdjustmentViewController
-        viewController.filter = filter as? LinearAdjustableFilter
-        navigationController?.pushViewController(viewController, animated: true)
+        if let viewController = storyboard?.instantiateViewController(withIdentifier: "LinearAdjustableViewController")
+            as? LinearAdjustmentViewController
+        {
+            viewController.filter = filter as? LinearAdjustableFilter
+            navigationController?.pushViewController(viewController, animated: true)
+        }
     }
-    //var currentFilters = FiltersModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()

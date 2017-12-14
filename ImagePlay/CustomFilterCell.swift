@@ -19,11 +19,12 @@ class CustomFilterCell: UITableViewCell {
         self.customLabel.text = filter.name
         if filter is LinearAdjustableFilter {
             self.editButton.isHidden = false
+            editButton.tag = tag
         } else {
             self.editButton.isHidden = true
         }
         self.showsReorderControl = true
-        self.tag = tag
+        
     }
     
     

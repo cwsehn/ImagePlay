@@ -10,7 +10,8 @@ import UIKit
 
 class CustomFilterCell: UITableViewCell {
 
-
+    @IBOutlet weak var previewImage: UIImageView!
+    
     @IBOutlet weak var customLabel: UILabel!
     
     @IBOutlet weak var editButton: UIButton!

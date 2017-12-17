@@ -205,13 +205,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     
     
-    /*
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let selectFiltersViewController = segue.destination as? SelectedFiltersViewController {
-            selectFiltersViewController.filtersModel = selectedFilters
+            selectFiltersViewController.selectImageForPreview(original: originalImage)
         }
     }
-    */
+ 
     
     
     func checkPermission() {

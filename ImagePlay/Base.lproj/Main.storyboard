@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -157,25 +158,35 @@
                                                         <action selector="onEdit:" destination="b1h-kd-fg1" eventType="touchUpInside" id="W6x-Me-TnS"/>
                                                     </connections>
                                                 </button>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="A2s-5i-4YR">
+                                                    <rect key="frame" x="0.0" y="0.0" width="45" height="44"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="A2s-5i-4YR" secondAttribute="height" multiplier="44:43" id="66y-Lu-3sZ"/>
+                                                    </constraints>
+                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o4z-3C-NWK">
-                                                    <rect key="frame" x="15" y="11" width="42" height="21"/>
+                                                    <rect key="frame" x="84" y="11" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="o4z-3C-NWK" firstAttribute="centerY" secondItem="Nxw-a4-c95" secondAttribute="centerY" id="9d1-cL-sYl"/>
+                                                <constraint firstItem="o4z-3C-NWK" firstAttribute="leading" secondItem="A2s-5i-4YR" secondAttribute="trailing" constant="39" id="2Qy-Jg-Z3I"/>
+                                                <constraint firstItem="A2s-5i-4YR" firstAttribute="top" secondItem="Nxw-a4-c95" secondAttribute="top" id="2Sg-9D-hRd"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="o4z-3C-NWK" secondAttribute="trailing" constant="20" symbolic="YES" id="7Uw-jS-x0b"/>
+                                                <constraint firstItem="o4z-3C-NWK" firstAttribute="centerY" secondItem="A2s-5i-4YR" secondAttribute="centerY" id="FyR-Sc-rEG"/>
                                                 <constraint firstAttribute="trailing" secondItem="TxX-di-JUi" secondAttribute="trailing" constant="11" id="GtE-R6-MJ3"/>
-                                                <constraint firstItem="o4z-3C-NWK" firstAttribute="leading" secondItem="Nxw-a4-c95" secondAttribute="leading" constant="15" id="aVB-XL-7UV"/>
+                                                <constraint firstAttribute="bottom" secondItem="A2s-5i-4YR" secondAttribute="bottom" id="icd-Yc-s3X"/>
+                                                <constraint firstItem="A2s-5i-4YR" firstAttribute="leading" secondItem="Nxw-a4-c95" secondAttribute="leading" id="jyO-As-jWj"/>
                                                 <constraint firstItem="TxX-di-JUi" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Nxw-a4-c95" secondAttribute="leading" constant="20" symbolic="YES" id="s2F-wF-LJy"/>
                                                 <constraint firstItem="o4z-3C-NWK" firstAttribute="baseline" secondItem="TxX-di-JUi" secondAttribute="baseline" id="yQR-yx-53V"/>
-                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="o4z-3C-NWK" secondAttribute="trailing" constant="20" symbolic="YES" id="zKO-Ik-PbZ"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="customLabel" destination="o4z-3C-NWK" id="zaP-D0-1jc"/>
                                             <outlet property="editButton" destination="TxX-di-JUi" id="3BG-av-yli"/>
+                                            <outlet property="previewImage" destination="A2s-5i-4YR" id="6fe-7g-sAZ"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -214,7 +225,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cad-gI-wXs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1380" y="133"/>
+            <point key="canvasLocation" x="1380" y="132.68365817091455"/>
         </scene>
         <!--Add Filter-->
         <scene sceneID="LR9-wE-w5Y">

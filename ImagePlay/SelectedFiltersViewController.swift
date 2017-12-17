@@ -13,6 +13,9 @@ class SelectedFiltersViewController: UIViewController, UITableViewDataSource, UI
     @IBOutlet weak var filtersTable: UITableView!
     @IBOutlet weak var noFilterView: UIView!
     
+    var imageThumbnail: UIImage?
+    
+   
     @IBAction func onEdit(_ sender: UIButton) {
         let filter = currentFilters[sender.tag]
         if let viewController = storyboard?.instantiateViewController(withIdentifier: "LinearAdjustableViewController")
@@ -50,6 +53,11 @@ class SelectedFiltersViewController: UIViewController, UITableViewDataSource, UI
         }
     }
     
+    func selectImageForPreview(original: UIImage ){
+        let imageShrinker = ImageResizer(maxDimension: 128)
+        imageThumbnail = imageShrinker.resizeImage(original: original)
+    }
+    
     /* Data Source Methods */
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return currentFilters.count
@@ -60,6 +68,11 @@ class SelectedFiltersViewController: UIViewController, UITableViewDataSource, UI
             print("Customize")
             let filter = currentFilters[indexPath.row]
             cell.updateFor(filter: filter, tag: indexPath.row)
+            
+            if let previewImage = imageThumbnail {
+                let filteredPreview = filter.apply(input: Image(image: previewImage))
+                cell.previewImage.image = filteredPreview.toUIImage()
+            }
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "FilterCell", for: indexPath)

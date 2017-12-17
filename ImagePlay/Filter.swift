@@ -14,5 +14,8 @@ protocol Filter {
 }
 
 protocol LinearAdjustableFilter: Filter {
-    
+    var value: Double { get set }
+    var min: Double { get }
+    var max: Double { get }
+    var defaultValue: Double { get }    
 }

@@ -9,7 +9,7 @@
 import Foundation
 
 let allFilters: [Filter] = [
-    ScaleIntensityFilter(scale: 0.8),
+    ScaleIntensityFilter(),
     MixFilter(),
     GreyScaleFilter(),
     InvertFilter(),
@@ -21,16 +21,21 @@ var currentFilters: [Filter] = []
 
 class ScaleIntensityFilter: Filter, LinearAdjustableFilter {
     let name = "Scale Intensity"
-    let scale: Double
-    init(scale: Double) {
-        self.scale = scale
+    var value: Double
+    let min = 0.0
+    let max = 1.0
+    let defaultValue = 0.75
+
+    init () {
+        self.value = self.defaultValue
     }
+    
     func apply(input: Image) -> Image {
         return input.transformPixels(transformFunc: { (p1: RGBAPixel) -> RGBAPixel in
             var p = p1
-            p.red = UInt8( Double(p.red) * self.scale )
-            p.green = UInt8( Double(p.green) * self.scale )
-            p.blue = UInt8( Double(p.blue) * self.scale )
+            p.red = UInt8( Double(p.red) * self.value )
+            p.green = UInt8( Double(p.green) * self.value )
+            p.blue = UInt8( Double(p.blue) * self.value )
             return p
         })
     }

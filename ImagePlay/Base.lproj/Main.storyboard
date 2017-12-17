@@ -260,6 +260,9 @@
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="g8q-12-J8P">
                                 <rect key="frame" x="18" y="49" width="339" height="31"/>
+                                <connections>
+                                    <action selector="sliderChanged:" destination="TaL-lG-oVV" eventType="valueChanged" id="6KK-Ja-Wow"/>
+                                </connections>
                             </slider>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

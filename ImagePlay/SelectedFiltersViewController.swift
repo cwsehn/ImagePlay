@@ -54,8 +54,10 @@ class SelectedFiltersViewController: UIViewController, UITableViewDataSource, UI
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return currentFilters.count
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "FilterCell", for: indexPath) as? CustomFilterCell {
+            print("Customize")
             let filter = currentFilters[indexPath.row]
             cell.updateFor(filter: filter, tag: indexPath.row)
             return cell

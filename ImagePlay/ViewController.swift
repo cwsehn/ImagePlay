@@ -203,9 +203,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         vc.popoverPresentationController?.barButtonItem = sender
     }
     
-    
-    
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let selectFiltersViewController = segue.destination as? SelectedFiltersViewController {
             selectFiltersViewController.selectImageForPreview(original: originalImage)

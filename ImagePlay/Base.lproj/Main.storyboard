@@ -152,33 +152,33 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TxX-di-JUi">
-                                                    <rect key="frame" x="334" y="7" width="30" height="30"/>
+                                                    <rect key="frame" x="334" y="7.5" width="30" height="30"/>
                                                     <state key="normal" title="Edit"/>
                                                     <connections>
                                                         <action selector="onEdit:" destination="b1h-kd-fg1" eventType="touchUpInside" id="W6x-Me-TnS"/>
                                                     </connections>
                                                 </button>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="A2s-5i-4YR">
-                                                    <rect key="frame" x="0.0" y="0.0" width="45" height="44"/>
+                                                    <rect key="frame" x="20" y="0.0" width="44" height="43.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="A2s-5i-4YR" secondAttribute="height" multiplier="44:43" id="66y-Lu-3sZ"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o4z-3C-NWK">
-                                                    <rect key="frame" x="84" y="11" width="42" height="21"/>
+                                                    <rect key="frame" x="100.5" y="11.5" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="o4z-3C-NWK" firstAttribute="leading" secondItem="A2s-5i-4YR" secondAttribute="trailing" constant="39" id="2Qy-Jg-Z3I"/>
+                                                <constraint firstItem="o4z-3C-NWK" firstAttribute="leading" secondItem="A2s-5i-4YR" secondAttribute="trailing" constant="36" id="2Qy-Jg-Z3I"/>
                                                 <constraint firstItem="A2s-5i-4YR" firstAttribute="top" secondItem="Nxw-a4-c95" secondAttribute="top" id="2Sg-9D-hRd"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="o4z-3C-NWK" secondAttribute="trailing" constant="20" symbolic="YES" id="7Uw-jS-x0b"/>
                                                 <constraint firstItem="o4z-3C-NWK" firstAttribute="centerY" secondItem="A2s-5i-4YR" secondAttribute="centerY" id="FyR-Sc-rEG"/>
                                                 <constraint firstAttribute="trailing" secondItem="TxX-di-JUi" secondAttribute="trailing" constant="11" id="GtE-R6-MJ3"/>
                                                 <constraint firstAttribute="bottom" secondItem="A2s-5i-4YR" secondAttribute="bottom" id="icd-Yc-s3X"/>
-                                                <constraint firstItem="A2s-5i-4YR" firstAttribute="leading" secondItem="Nxw-a4-c95" secondAttribute="leading" id="jyO-As-jWj"/>
+                                                <constraint firstItem="A2s-5i-4YR" firstAttribute="leading" secondItem="Nxw-a4-c95" secondAttribute="leading" constant="20" symbolic="YES" id="jyO-As-jWj"/>
                                                 <constraint firstItem="TxX-di-JUi" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Nxw-a4-c95" secondAttribute="leading" constant="20" symbolic="YES" id="s2F-wF-LJy"/>
                                                 <constraint firstItem="o4z-3C-NWK" firstAttribute="baseline" secondItem="TxX-di-JUi" secondAttribute="baseline" id="yQR-yx-53V"/>
                                             </constraints>

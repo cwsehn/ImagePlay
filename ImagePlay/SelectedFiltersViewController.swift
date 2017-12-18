@@ -13,7 +13,8 @@ class SelectedFiltersViewController: UIViewController, UITableViewDataSource, UI
     @IBOutlet weak var filtersTable: UITableView!
     @IBOutlet weak var noFilterView: UIView!
     
-    var imageThumbnail: UIImage?
+    private var imageThumbnail: UIImage?
+    private var filteredImageCache = [Image]()
     
    
     @IBAction func onEdit(_ sender: UIButton) {
@@ -51,6 +52,7 @@ class SelectedFiltersViewController: UIViewController, UITableViewDataSource, UI
         } else {
             filtersTable.backgroundView = nil
         }
+        filteredImageCache = []
     }
     
     func selectImageForPreview(original: UIImage ){
@@ -65,19 +67,30 @@ class SelectedFiltersViewController: UIViewController, UITableViewDataSource, UI
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "FilterCell", for: indexPath) as? CustomFilterCell {
-            print("Customize")
             let filter = currentFilters[indexPath.row]
             cell.updateFor(filter: filter, tag: indexPath.row)
             
-            if let previewImage = imageThumbnail {
-                let filteredPreview = filter.apply(input: Image(image: previewImage))
-                cell.previewImage.image = filteredPreview.toUIImage()
+            if imageThumbnail != nil {
+                cell.previewImage.image = getFilteredImageForRow(row: indexPath.row).toUIImage()
             }
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "FilterCell", for: indexPath)
             return cell
         }        
+    }
+    
+    private func getFilteredImageForRow (row: Int) -> Image {
+        if row < 0 { return Image(image: imageThumbnail!) }
+        if row < filteredImageCache.count {
+            return filteredImageCache[row]
+        } else {
+            let filter = currentFilters[row]
+            let previousImage = getFilteredImageForRow(row: row-1)
+            let filteredImage = filter.apply(input: previousImage)
+            filteredImageCache.append(filteredImage)
+            return filteredImage
+        }
     }
     
     /* Delegate Methods */

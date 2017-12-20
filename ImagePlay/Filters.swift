@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 let allFilters: [Filter] = [
     ScaleIntensityFilter(),
@@ -14,7 +15,11 @@ let allFilters: [Filter] = [
     GreyScaleFilter(),
     InvertFilter(),
     Colors8Filter(),
-    Dither8Colors()
+    Dither8Colors(),
+    HueFilter(),
+    SaturationFilter(),
+    LightnessFilter(),
+    MirrorFilter()
 ]
 
 var currentFilters: [Filter] = []
@@ -24,7 +29,7 @@ class ScaleIntensityFilter: Filter, LinearAdjustableFilter {
     var value: Double
     let min = 0.0
     let max = 1.0
-    let defaultValue = 0.75
+    let defaultValue = 1.0
 
     init () {
         self.value = self.defaultValue
@@ -37,6 +42,108 @@ class ScaleIntensityFilter: Filter, LinearAdjustableFilter {
             p.green = UInt8( Double(p.green) * self.value )
             p.blue = UInt8( Double(p.blue) * self.value )
             return p
+        })
+    }
+}
+
+class HueFilter: Filter, LinearAdjustableFilter {
+    let name = "Hue"
+    var value: Double
+    let min = 0.0
+    let max = 1.0
+    let defaultValue = 0.75
+    
+    init () {
+        self.value = self.defaultValue
+    }
+    
+    func apply(input: Image) -> Image {
+        return input.transformPixels(transformFunc: { (p: RGBAPixel) -> RGBAPixel in
+            
+            let uiColorPixel = p.toUIColor()
+            var hslPixel = HSLPixel()
+            
+            uiColorPixel.getHue(
+                &hslPixel.h,
+                saturation: &hslPixel.s,
+                brightness: &hslPixel.l,
+                alpha: &hslPixel.alpha)
+            
+            let newUIColor =  UIColor(
+                hue: CGFloat(value),
+                saturation: hslPixel.s,
+                brightness: hslPixel.l,
+                alpha: hslPixel.alpha)
+        
+            return RGBAPixel(uiColor: newUIColor)
+        })
+    }
+}
+
+class SaturationFilter: Filter, LinearAdjustableFilter {
+    let name = "Saturation"
+    var value: Double
+    let min = 0.0
+    let max = 3.0
+    let defaultValue = 1.0
+    
+    init () {
+        self.value = self.defaultValue
+    }
+    
+    func apply(input: Image) -> Image {
+        return input.transformPixels(transformFunc: { (p: RGBAPixel) -> RGBAPixel in
+            
+            let uiColorPixel = p.toUIColor()
+            var hslPixel = HSLPixel()
+            
+            uiColorPixel.getHue(
+                &hslPixel.h,
+                saturation: &hslPixel.s,
+                brightness: &hslPixel.l,
+                alpha: &hslPixel.alpha)
+            
+            let newUIColor =  UIColor(
+                hue: hslPixel.h,
+                saturation: CGFloat(value) * hslPixel.s,
+                brightness: hslPixel.l,
+                alpha: hslPixel.alpha)
+            
+            return RGBAPixel(uiColor: newUIColor)
+        })
+    }
+}
+
+class LightnessFilter: Filter, LinearAdjustableFilter {
+    let name = "Lightness"
+    var value: Double
+    let min = 0.0
+    let max = 4.0
+    let defaultValue = 1.5
+    
+    init () {
+        self.value = self.defaultValue
+    }
+    
+    func apply(input: Image) -> Image {
+        return input.transformPixels(transformFunc: { (p: RGBAPixel) -> RGBAPixel in
+            
+            let uiColorPixel = p.toUIColor()
+            var hslPixel = HSLPixel()
+            
+            uiColorPixel.getHue(
+                &hslPixel.h,
+                saturation: &hslPixel.s,
+                brightness: &hslPixel.l,
+                alpha: &hslPixel.alpha)
+            
+            let newUIColor =  UIColor(
+                hue: hslPixel.h,
+                saturation: hslPixel.s,
+                brightness: CGFloat(value) * hslPixel.l,
+                alpha: hslPixel.alpha)
+            
+            return RGBAPixel(uiColor: newUIColor)
         })
     }
 }
@@ -109,11 +216,20 @@ class InvertFilter: Filter {
     }
 }
 
-
-
-
-
-
+class MirrorFilter: Filter {
+    let name = "Left-Right Mirror"
+    func apply(input: Image) -> Image {
+        
+        let newImage = Image(width: input.width, height: input.height)
+        for y in 0 ..< input.height {
+            for x in 0 ..< input.width {
+                let p = input.getPixel(x: input.width-x-1, y: y)
+                newImage.setPixel(value: p, x: x, y: y)
+            }
+        }
+        return newImage
+    }
+}
 
 
 

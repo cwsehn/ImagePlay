@@ -16,6 +16,22 @@ public struct RGBAPixel {
     public init( r: UInt8, g: UInt8, b: UInt8 ) {
         raw = 0xFF000000 | UInt32(r) | UInt32(g)<<8 | UInt32(b)<<16
     }
+    public init(uiColor: UIColor) {
+        var r: CGFloat = 0.0
+        var g: CGFloat = 0.0
+        var b: CGFloat = 0.0
+        var a: CGFloat = 0.0
+        uiColor.getRed(&r, green: &g, blue: &b, alpha: &a)
+        
+        r = r < 1 ? r : 1
+        g = g < 1 ? g : 1
+        b = b < 1 ? b : 1
+        r = r > 0 ? r : 0
+        g = g > 0 ? g : 0
+        b = b > 0 ? b : 0
+        
+        self.init(r: UInt8(r*255), g: UInt8(g*255), b: UInt8(b*255))
+    }
     public var raw: UInt32
     
     public var red: UInt8 {
@@ -57,6 +73,15 @@ public struct RGBAPixel {
         let deltaBlue = abs(Int(self.blue) - Int(otherPixel.blue))
         
         return (deltaRed + deltaGreen + deltaBlue)
+    }
+    
+    public func toUIColor() -> UIColor {
+        let divisor = CGFloat(255.0)
+        return UIColor(
+            red: CGFloat(self.red)/divisor,
+            green: CGFloat(self.green)/divisor,
+            blue: CGFloat(self.blue)/divisor,
+            alpha: CGFloat(self.alpha)/divisor)
     }
 }
 

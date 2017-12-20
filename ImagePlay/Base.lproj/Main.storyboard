@@ -152,20 +152,20 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TxX-di-JUi">
-                                                    <rect key="frame" x="334" y="7.5" width="30" height="30"/>
+                                                    <rect key="frame" x="334" y="7" width="30" height="30"/>
                                                     <state key="normal" title="Edit"/>
                                                     <connections>
                                                         <action selector="onEdit:" destination="b1h-kd-fg1" eventType="touchUpInside" id="W6x-Me-TnS"/>
                                                     </connections>
                                                 </button>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="A2s-5i-4YR">
-                                                    <rect key="frame" x="20" y="0.0" width="44" height="43.5"/>
+                                                    <rect key="frame" x="20" y="0.0" width="43" height="43.5"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" secondItem="A2s-5i-4YR" secondAttribute="height" multiplier="44:43" id="66y-Lu-3sZ"/>
+                                                        <constraint firstAttribute="width" secondItem="A2s-5i-4YR" secondAttribute="height" multiplier="1:1" id="pez-WK-HuL"/>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o4z-3C-NWK">
-                                                    <rect key="frame" x="100.5" y="11.5" width="42" height="21"/>
+                                                    <rect key="frame" x="98.5" y="11" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -275,27 +275,35 @@
                                     <action selector="sliderChanged:" destination="TaL-lG-oVV" eventType="valueChanged" id="6KK-Ja-Wow"/>
                                 </connections>
                             </slider>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KjC-Eo-s1c">
+                                <rect key="frame" x="8" y="87" width="359" height="572"/>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="g8q-12-J8P" firstAttribute="top" secondItem="BIc-Jm-nJ5" secondAttribute="bottom" constant="8" symbolic="YES" id="4aV-3Y-3py"/>
+                            <constraint firstItem="WPm-Td-dXy" firstAttribute="bottom" secondItem="KjC-Eo-s1c" secondAttribute="bottom" constant="8" id="7rP-Dp-InD"/>
                             <constraint firstItem="BIc-Jm-nJ5" firstAttribute="leading" secondItem="uso-2j-JRL" secondAttribute="leading" constant="20" symbolic="YES" id="BKK-Xo-IUs"/>
+                            <constraint firstItem="KjC-Eo-s1c" firstAttribute="top" secondItem="g8q-12-J8P" secondAttribute="bottom" constant="8" symbolic="YES" id="CGP-Cz-L8f"/>
                             <constraint firstItem="BIc-Jm-nJ5" firstAttribute="top" secondItem="uso-2j-JRL" secondAttribute="top" constant="20" symbolic="YES" id="Cgp-FZ-B6g"/>
                             <constraint firstAttribute="trailing" secondItem="BIc-Jm-nJ5" secondAttribute="trailing" constant="20" symbolic="YES" id="MED-ba-as3"/>
                             <constraint firstAttribute="trailing" secondItem="g8q-12-J8P" secondAttribute="trailing" constant="20" symbolic="YES" id="VI3-Qd-cdW"/>
                             <constraint firstItem="g8q-12-J8P" firstAttribute="leading" secondItem="uso-2j-JRL" secondAttribute="leading" constant="20" symbolic="YES" id="azW-HQ-iJw"/>
+                            <constraint firstItem="KjC-Eo-s1c" firstAttribute="leading" secondItem="WPm-Td-dXy" secondAttribute="leading" constant="8" id="wAg-iI-vSb"/>
+                            <constraint firstItem="WPm-Td-dXy" firstAttribute="trailing" secondItem="KjC-Eo-s1c" secondAttribute="trailing" constant="8" id="ydW-Vk-Eje"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="WPm-Td-dXy"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <connections>
                         <outlet property="label" destination="BIc-Jm-nJ5" id="RQN-xl-zQh"/>
+                        <outlet property="scrollView" destination="KjC-Eo-s1c" id="zV1-V9-F2Q"/>
                         <outlet property="slider" destination="g8q-12-J8P" id="VIM-8j-Nb3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FBg-2y-Fm8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3010" y="133"/>
+            <point key="canvasLocation" x="3008.8000000000002" y="132.68365817091455"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="XYc-eu-0p2">

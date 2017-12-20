@@ -12,17 +12,25 @@ class SelectedFiltersViewController: UIViewController, UITableViewDataSource, UI
    
     @IBOutlet weak var filtersTable: UITableView!
     @IBOutlet weak var noFilterView: UIView!
-    
+    var currentImage: UIImage? {
+        didSet{
+            selectImageForPreview(original: currentImage!)
+        }
+    }
     private var imageThumbnail: UIImage?
     private var filteredImageCache = [Image]()
     
    
     @IBAction func onEdit(_ sender: UIButton) {
         let filter = currentFilters[sender.tag]
+        let imageShrinker = ImageResizer(maxDimension: 640)
+        let previewImage = imageShrinker.resizeImage(original: currentImage!)
+        let filteredPreview = filter.apply(input: Image(image: previewImage))
         if let viewController = storyboard?.instantiateViewController(withIdentifier: "LinearAdjustableViewController")
             as? LinearAdjustmentViewController
         {
             viewController.filter = filter as? LinearAdjustableFilter
+            viewController.previewImage = filteredPreview.toUIImage()
             navigationController?.pushViewController(viewController, animated: true)
         }
     }
@@ -118,7 +126,7 @@ class SelectedFiltersViewController: UIViewController, UITableViewDataSource, UI
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 44
+        return 128
     }
     
     /* Navigation */

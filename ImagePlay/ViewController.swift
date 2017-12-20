@@ -205,7 +205,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let selectFiltersViewController = segue.destination as? SelectedFiltersViewController {
-            selectFiltersViewController.selectImageForPreview(original: originalImage)
+            //selectFiltersViewController.selectImageForPreview(original: originalImage)
+            selectFiltersViewController.currentImage = originalImage
         }
     }
  

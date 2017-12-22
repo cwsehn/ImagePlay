@@ -23,15 +23,14 @@ public struct RGBAPixel {
         var a: CGFloat = 0.0
         uiColor.getRed(&r, green: &g, blue: &b, alpha: &a)
         
-        r = r < 1 ? r : 1
-        g = g < 1 ? g : 1
-        b = b < 1 ? b : 1
-        r = r > 0 ? r : 0
-        g = g > 0 ? g : 0
-        b = b > 0 ? b : 0
-        
-        self.init(r: UInt8(r*255), g: UInt8(g*255), b: UInt8(b*255))
+        // acceptableRange() is needed to constrain the rgb components 0...1
+
+        self.init(r: acceptableRange(colorComponent: r),
+                  g: acceptableRange(colorComponent: g),
+                  b: acceptableRange(colorComponent: b))
     }
+    
+    
     public var raw: UInt32
     
     public var red: UInt8 {
@@ -85,7 +84,13 @@ public struct RGBAPixel {
     }
 }
 
-
+private func acceptableRange(colorComponent: CGFloat) -> UInt8 {
+    var acceptableValue = colorComponent
+    if colorComponent < 0 { acceptableValue = 0 }
+    else if colorComponent > 1 { acceptableValue = 1 }
+    
+    return UInt8(acceptableValue*255)
+}
 
 
 

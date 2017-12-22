@@ -22,8 +22,16 @@ class SelectedFiltersViewController: UIViewController, UITableViewDataSource, UI
     
 
     @IBAction func onTrashCurrentFilters(_ sender: UIBarButtonItem) {
-        currentFilters = []
-        handleFiltersChanged()
+        let ac = UIAlertController(title: "Trash Filters?", message: nil, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Trash", style: .destructive, handler: { [unowned self] (action) in
+            currentFilters = []
+            self.handleFiltersChanged()
+        }))
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        ac.modalPresentationStyle = .popover
+        self.present(ac, animated: true, completion: nil)
+        ac.popoverPresentationController?.barButtonItem = sender
+        
     }
     
     @IBAction func onEdit(_ sender: UIButton) {

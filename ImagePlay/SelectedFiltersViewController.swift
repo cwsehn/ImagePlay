@@ -20,7 +20,12 @@ class SelectedFiltersViewController: UIViewController, UITableViewDataSource, UI
     private var imageThumbnail: UIImage?
     private var filteredImageCache = [Image]()
     
-   
+
+    @IBAction func onTrashCurrentFilters(_ sender: UIBarButtonItem) {
+        currentFilters = []
+        handleFiltersChanged()
+    }
+    
     @IBAction func onEdit(_ sender: UIButton) {
         let filter = currentFilters[sender.tag]
         let imageShrinker = ImageResizer(maxDimension: 640)
@@ -57,8 +62,9 @@ class SelectedFiltersViewController: UIViewController, UITableViewDataSource, UI
         filtersTable.reloadData()
         if (currentFilters.count == 0) {
             filtersTable.backgroundView = noFilterView
+            filtersTable.backgroundView?.isHidden = false
         } else {
-            filtersTable.backgroundView = nil
+            filtersTable.backgroundView?.isHidden = true
         }
         filteredImageCache = []
     }

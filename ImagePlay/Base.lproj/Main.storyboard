@@ -211,11 +211,18 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="SelectFilters" id="bSI-aN-Adb">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="sxf-DW-578">
-                            <connections>
-                                <segue destination="AD4-Os-1ob" kind="show" id="Jwn-Na-tnp"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="sxf-DW-578">
+                                <connections>
+                                    <segue destination="AD4-Os-1ob" kind="show" id="Jwn-Na-tnp"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="trash" id="nNY-YI-3pG">
+                                <connections>
+                                    <action selector="onTrashCurrentFilters:" destination="b1h-kd-fg1" id="aK7-HM-lVh"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>

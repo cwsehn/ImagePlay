@@ -15,11 +15,14 @@ let allFilters: [Filter] = [
     GreyScaleFilter(),
     InvertFilter(),
     Colors8Filter(),
+    Colors16Filter(),
     Dither8Colors(),
+    Dither16Colors(),
     HueFilter(),
     SaturationFilter(),
     LightnessFilter(),
-    MirrorFilter()
+    MirrorFilter(),
+    FlipFilter()
 ]
 
 var currentFilters: [Filter] = []
@@ -159,11 +162,40 @@ let palette8: [RGBAPixel] = [
     RGBAPixel(r: 0xFF, g: 0xFF, b: 0xFF)
 ]
 
+let palette16: [RGBAPixel] = [
+    RGBAPixel(r: 0, g: 0, b: 0),
+    RGBAPixel(r: 0xFF, g: 0x0, b: 0x0),
+    RGBAPixel(r: 0x0, g: 0xFF, b: 0x0),
+    RGBAPixel(r: 0x0, g: 0x0, b: 0xFF),
+    RGBAPixel(r: 0xFF, g: 0xFF, b: 0x0),
+    RGBAPixel(r: 0xFF, g: 0x0, b: 0xFF),
+    RGBAPixel(r: 0x0, g: 0xFF, b: 0xFF),
+    RGBAPixel(r: 0xFF, g: 0xFF, b: 0xFF),
+    
+    RGBAPixel(r: 0x3F, g: 0x3F, b: 0x3F),
+    RGBAPixel(r: 0x7F, g: 0x0, b: 0x0),
+    RGBAPixel(r: 0x0, g: 0x7F, b: 0x0),
+    RGBAPixel(r: 0x0, g: 0x0, b: 0x7F),
+    RGBAPixel(r: 0x7F, g: 0x7F, b: 0x0),
+    RGBAPixel(r: 0x7F, g: 0x0, b: 0x7F),
+    RGBAPixel(r: 0x0, g: 0x7F, b: 0x7F),
+    RGBAPixel(r: 0x7F, g: 0x7F, b: 0x7F)
+]
+
 class Colors8Filter: Filter {
     let name = "8 Colors Only"
     func apply(input: Image) -> Image {
         return input.transformPixels(transformFunc: { (p1: RGBAPixel) -> RGBAPixel in
             return p1.matchClosestColor(palette: palette8)
+        })
+    }
+}
+
+class Colors16Filter: Filter {
+    let name = "16 Colors Only"
+    func apply(input: Image) -> Image {
+        return input.transformPixels(transformFunc: { (p1: RGBAPixel) -> RGBAPixel in
+            return p1.matchClosestColor(palette: palette16)
         })
     }
 }
@@ -175,6 +207,20 @@ class Dither8Colors: Filter {
         return input.transformPixels(transformFunc: { (requestedPixel: RGBAPixel) -> RGBAPixel in
             delta = delta.add(p: requestedPixel)
             let newPixel = delta.asPixel().matchClosestColor(palette: palette8)
+            delta = delta.subtract(p: newPixel)
+            
+            return newPixel
+        })
+    }
+}
+
+class Dither16Colors: Filter {
+    let name = "Dither 16 Colors"
+    func apply(input: Image) -> Image {
+        var delta = PixelDelta(rDelta: 0, gDelta: 0, bDelta: 0)
+        return input.transformPixels(transformFunc: { (requestedPixel: RGBAPixel) -> RGBAPixel in
+            delta = delta.add(p: requestedPixel)
+            let newPixel = delta.asPixel().matchClosestColor(palette: palette16)
             delta = delta.subtract(p: newPixel)
             
             return newPixel
@@ -231,6 +277,20 @@ class MirrorFilter: Filter {
     }
 }
 
+class FlipFilter: Filter {
+    let name = "Top-Bottom Mirror"
+    func apply(input: Image) -> Image {
+        
+        let newImage = Image(width: input.width, height: input.height)
+        for y in 0 ..< input.height {
+            for x in 0 ..< input.width {
+                let p = input.getPixel(x: x, y: y)
+                newImage.setPixel(value: p, x: x, y: input.height-y-1)
+            }
+        }
+        return newImage
+    }
+}
 
 
 
